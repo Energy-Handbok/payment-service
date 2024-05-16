@@ -16,17 +16,17 @@ public class WalletTransactionController {
     private final WalletTransactionService walletTransactionService;
 
     @GetMapping
-    public ResponseEntity<?> getAll(@RequestParam(defaultValue = "10") int pageSize,
+    public ResponseEntity<Object> getAll(@RequestParam(defaultValue = "10") int pageSize,
                                     @RequestParam(defaultValue = "1") int pageIndex){
-        ResponseObject responseObject = walletTransactionService.getAll(pageSize, pageIndex);
+        ResponseObject<Object> responseObject = walletTransactionService.getAll(pageSize, pageIndex);
         if(responseObject.getCode() == 200){
             return ResponseEntity.ok(responseObject);
         }
         return ResponseEntity.badRequest().body(responseObject);
     }
     @GetMapping("/detail")
-    public ResponseEntity<?> getObject(String id){
-        ResponseObject responseObject = walletTransactionService.getDetail(id);
+    public ResponseEntity<Object> getObject(String id){
+        ResponseObject<Object> responseObject = walletTransactionService.getDetail(id);
         if(responseObject.getCode() == 200){
             return ResponseEntity.ok(responseObject);
         }
@@ -34,7 +34,7 @@ public class WalletTransactionController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createObject(@RequestBody @Valid WalletTransactionDTOcreate object){
+    public ResponseEntity<Object> createObject(@RequestBody @Valid WalletTransactionDTOcreate object){
         ResponseObject<Object> responseObject = walletTransactionService.create(object);
         if(responseObject.getCode() == 200){
             return ResponseEntity.ok(responseObject);

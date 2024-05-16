@@ -18,6 +18,8 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class WalletTransactionServiceImpl implements WalletTransactionService {
+    public static final String SUCCESS_MSG = "Success";
+    public static final String EXCEPTION_DEFAULT_MSG = "Exception: ";
     private final WalletTransactionRepository walletTransactionRepository;
     private final WalletRepository walletRepository;
     private final ModelMapper modelMapper;
@@ -46,7 +48,7 @@ public class WalletTransactionServiceImpl implements WalletTransactionService {
             }
         });
         return ResponseObject.builder()
-                .code(200).message("Success")
+                .code(200).message(SUCCESS_MSG)
                 .pageSize(objList.size()).pageIndex(pageIndex).totalPage(totalPage)
                 .data(objList)
                 .build();
@@ -67,7 +69,7 @@ public class WalletTransactionServiceImpl implements WalletTransactionService {
         }catch (Exception e){
             return ResponseObject.builder()
                     .code(400)
-                    .message("Exception: "+ e.getMessage())
+                    .message(EXCEPTION_DEFAULT_MSG + e.getMessage())
                     .build();
         }
     }
@@ -83,13 +85,13 @@ public class WalletTransactionServiceImpl implements WalletTransactionService {
             walletTransactionRepository.save(walletTransaction);
             return ResponseObject.builder()
                     .code(200)
-                    .message("Success")
+                    .message(SUCCESS_MSG)
                     .data(walletTransaction)
                     .build();
         }catch (Exception e){
             return ResponseObject.builder()
                     .code(400)
-                    .message("Exception: " + e.getMessage())
+                    .message(EXCEPTION_DEFAULT_MSG + e.getMessage())
                     .build();
         }
     }

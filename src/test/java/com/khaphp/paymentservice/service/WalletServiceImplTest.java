@@ -10,6 +10,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class WalletServiceImplTest {
     @Test
     void createWallet() {
-        assertEquals(1, 1);
+        assertTrue(true);
     }
 }

@@ -8,5 +8,5 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(name = "user-service")
 public interface UserServiceFeignClient {
     @GetMapping("/api/v1/user-system/detail")
-    public ResponseEntity<?> getObject(@RequestParam String id);
+    public ResponseEntity<Object> getObject(@RequestParam String id);
 }

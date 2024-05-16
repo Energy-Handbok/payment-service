@@ -16,17 +16,17 @@ public class WalletTransactionController {
     private final WalletTransactionService walletTransactionService;
 
     @GetMapping
-    public ResponseEntity&lt;?&gt; getAll(@RequestParam(defaultValue = &quot;10&quot;) int pageSize,
+    public ResponseEntity&lt;Object&gt; getAll(@RequestParam(defaultValue = &quot;10&quot;) int pageSize,
                                     @RequestParam(defaultValue = &quot;1&quot;) int pageIndex){
-<span class="nc" id="L21">        ResponseObject responseObject = walletTransactionService.getAll(pageSize, pageIndex);</span>
+<span class="nc" id="L21">        ResponseObject&lt;Object&gt; responseObject = walletTransactionService.getAll(pageSize, pageIndex);</span>
 <span class="nc bnc" id="L22" title="All 2 branches missed.">        if(responseObject.getCode() == 200){</span>
 <span class="nc" id="L23">            return ResponseEntity.ok(responseObject);</span>
         }
 <span class="nc" id="L25">        return ResponseEntity.badRequest().body(responseObject);</span>
     }
     @GetMapping(&quot;/detail&quot;)
-    public ResponseEntity&lt;?&gt; getObject(String id){
-<span class="nc" id="L29">        ResponseObject responseObject = walletTransactionService.getDetail(id);</span>
+    public ResponseEntity&lt;Object&gt; getObject(String id){
+<span class="nc" id="L29">        ResponseObject&lt;Object&gt; responseObject = walletTransactionService.getDetail(id);</span>
 <span class="nc bnc" id="L30" title="All 2 branches missed.">        if(responseObject.getCode() == 200){</span>
 <span class="nc" id="L31">            return ResponseEntity.ok(responseObject);</span>
         }
@@ -34,7 +34,7 @@ public class WalletTransactionController {
     }
 
     @PostMapping
-    public ResponseEntity&lt;?&gt; createObject(@RequestBody @Valid WalletTransactionDTOcreate object){
+    public ResponseEntity&lt;Object&gt; createObject(@RequestBody @Valid WalletTransactionDTOcreate object){
 <span class="nc" id="L38">        ResponseObject&lt;Object&gt; responseObject = walletTransactionService.create(object);</span>
 <span class="nc bnc" id="L39" title="All 2 branches missed.">        if(responseObject.getCode() == 200){</span>
 <span class="nc" id="L40">            return ResponseEntity.ok(responseObject);</span>

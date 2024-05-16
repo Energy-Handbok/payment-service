@@ -17,7 +17,7 @@ public class WalletController {
     private final WalletService walletService;
 
     @GetMapping(&quot;/detail&quot;)
-    public ResponseEntity&lt;?&gt; detailObject(String customerId){
+    public ResponseEntity&lt;Object&gt; detailObject(String customerId){
 <span class="nc" id="L21">        ResponseObject&lt;Object&gt; responseObject = walletService.getDerail(customerId);</span>
 <span class="nc bnc" id="L22" title="All 2 branches missed.">        if(responseObject.getCode() == 200){</span>
 <span class="nc" id="L23">            return ResponseEntity.ok(responseObject);</span>
@@ -26,7 +26,7 @@ public class WalletController {
     }
 
     @PostMapping
-    public ResponseEntity&lt;?&gt; createObject(@RequestBody WalletDTOcreate walletDTOcreate){
+    public ResponseEntity&lt;Object&gt; createObject(@RequestBody WalletDTOcreate walletDTOcreate){
 <span class="nc" id="L30">        ResponseObject&lt;Object&gt; responseObject = walletService.create(walletDTOcreate);</span>
 <span class="nc bnc" id="L31" title="All 2 branches missed.">        if(responseObject.getCode() == 200){</span>
 <span class="nc" id="L32">            return ResponseEntity.ok(responseObject);</span>
@@ -35,7 +35,7 @@ public class WalletController {
     }
 
     @PutMapping(&quot;/customer-balance&quot;)
-    public ResponseEntity&lt;?&gt; updateObjectBalance(@RequestBody @Valid WalletDTOupdate object){
+    public ResponseEntity&lt;Object&gt; updateObjectBalance(@RequestBody @Valid WalletDTOupdate object){
 <span class="nc" id="L39">        ResponseObject&lt;Object&gt; responseObject = walletService.updateBalance(object);</span>
 <span class="nc bnc" id="L40" title="All 2 branches missed.">        if(responseObject.getCode() == 200){</span>
 <span class="nc" id="L41">            return ResponseEntity.ok(responseObject);</span>
@@ -44,7 +44,7 @@ public class WalletController {
     }
 
     @DeleteMapping
-    public ResponseEntity&lt;?&gt; deleteObject(String id){
+    public ResponseEntity&lt;Object&gt; deleteObject(String id){
 <span class="nc" id="L48">        ResponseObject&lt;Object&gt; responseObject = walletService.delete(id);</span>
 <span class="nc bnc" id="L49" title="All 2 branches missed.">        if(responseObject.getCode() == 200){</span>
 <span class="nc" id="L50">            return ResponseEntity.ok(responseObject);</span>

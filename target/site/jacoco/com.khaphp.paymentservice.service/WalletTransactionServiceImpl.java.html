@@ -18,6 +18,8 @@ import java.util.List;
 @Service
 <span class="nc" id="L19">@RequiredArgsConstructor</span>
 public class WalletTransactionServiceImpl implements WalletTransactionService {
+    public static final String SUCCESS_MSG = &quot;Success&quot;;
+    public static final String EXCEPTION_DEFAULT_MSG = &quot;Exception: &quot;;
     private final WalletTransactionRepository walletTransactionRepository;
     private final WalletRepository walletRepository;
     private final ModelMapper modelMapper;
@@ -26,71 +28,71 @@ public class WalletTransactionServiceImpl implements WalletTransactionService {
     private String linkBucket;
     @Override
     public ResponseObject&lt;Object&gt; getAll(int pageSize, int pageIndex) {
-<span class="nc" id="L29">        Page&lt;WalletTransaction&gt; objListPage = null;</span>
-<span class="nc" id="L30">        List&lt;WalletTransaction&gt; objList = null;</span>
-<span class="nc" id="L31">        int totalPage = 0;</span>
+<span class="nc" id="L31">        Page&lt;WalletTransaction&gt; objListPage = null;</span>
+<span class="nc" id="L32">        List&lt;WalletTransaction&gt; objList = null;</span>
+<span class="nc" id="L33">        int totalPage = 0;</span>
         //paging
-<span class="nc bnc" id="L33" title="All 4 branches missed.">        if(pageSize &gt; 0 &amp;&amp; pageIndex &gt; 0){</span>
-<span class="nc" id="L34">            objListPage = walletTransactionRepository.findAll(PageRequest.of(pageIndex - 1, pageSize));  //vì current page ở code nó start = 0, hay bên ngoài la 2pga đầu tiên hay 1</span>
-<span class="nc bnc" id="L35" title="All 2 branches missed.">            if(objListPage != null){</span>
-<span class="nc" id="L36">                totalPage = objListPage.getTotalPages();</span>
-<span class="nc" id="L37">                objList = objListPage.getContent();</span>
+<span class="nc bnc" id="L35" title="All 4 branches missed.">        if(pageSize &gt; 0 &amp;&amp; pageIndex &gt; 0){</span>
+<span class="nc" id="L36">            objListPage = walletTransactionRepository.findAll(PageRequest.of(pageIndex - 1, pageSize));  //vì current page ở code nó start = 0, hay bên ngoài la 2pga đầu tiên hay 1</span>
+<span class="nc bnc" id="L37" title="All 2 branches missed.">            if(objListPage != null){</span>
+<span class="nc" id="L38">                totalPage = objListPage.getTotalPages();</span>
+<span class="nc" id="L39">                objList = objListPage.getContent();</span>
             }
         }else{ //get all
-<span class="nc" id="L40">            objList = walletTransactionRepository.findAll();</span>
-<span class="nc" id="L41">            pageIndex = 1;</span>
+<span class="nc" id="L42">            objList = walletTransactionRepository.findAll();</span>
+<span class="nc" id="L43">            pageIndex = 1;</span>
         }
-<span class="nc" id="L43">        objList.forEach(item -&gt; {</span>
-<span class="nc bnc" id="L44" title="All 2 branches missed.">            if(item.getDescription().contains(&quot;Nap tien vao vi Energy Handbook&quot;)){</span>
-<span class="nc" id="L45">                item.setDescription(&quot;Nạp tiền vào ví Energy Handbook&quot;);</span>
+<span class="nc" id="L45">        objList.forEach(item -&gt; {</span>
+<span class="nc bnc" id="L46" title="All 2 branches missed.">            if(item.getDescription().contains(&quot;Nap tien vao vi Energy Handbook&quot;)){</span>
+<span class="nc" id="L47">                item.setDescription(&quot;Nạp tiền vào ví Energy Handbook&quot;);</span>
             }
-<span class="nc" id="L47">        });</span>
-<span class="nc" id="L48">        return ResponseObject.builder()</span>
-<span class="nc" id="L49">                .code(200).message(&quot;Success&quot;)</span>
-<span class="nc" id="L50">                .pageSize(objList.size()).pageIndex(pageIndex).totalPage(totalPage)</span>
-<span class="nc" id="L51">                .data(objList)</span>
-<span class="nc" id="L52">                .build();</span>
+<span class="nc" id="L49">        });</span>
+<span class="nc" id="L50">        return ResponseObject.builder()</span>
+<span class="nc" id="L51">                .code(200).message(SUCCESS_MSG)</span>
+<span class="nc" id="L52">                .pageSize(objList.size()).pageIndex(pageIndex).totalPage(totalPage)</span>
+<span class="nc" id="L53">                .data(objList)</span>
+<span class="nc" id="L54">                .build();</span>
     }
 
     @Override
     public ResponseObject&lt;Object&gt; getDetail(String id) {
         try{
-<span class="nc" id="L58">            WalletTransaction object = walletTransactionRepository.findById(id).orElse(null);</span>
-<span class="nc bnc" id="L59" title="All 2 branches missed.">            if(object == null) {</span>
-<span class="nc" id="L60">                throw new Exception(&quot;object not found&quot;);</span>
+<span class="nc" id="L60">            WalletTransaction object = walletTransactionRepository.findById(id).orElse(null);</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">            if(object == null) {</span>
+<span class="nc" id="L62">                throw new Exception(&quot;object not found&quot;);</span>
             }
-<span class="nc" id="L62">            return ResponseObject.builder()</span>
-<span class="nc" id="L63">                    .code(200)</span>
-<span class="nc" id="L64">                    .message(&quot;Found&quot;)</span>
-<span class="nc" id="L65">                    .data(object)</span>
-<span class="nc" id="L66">                    .build();</span>
-<span class="nc" id="L67">        }catch (Exception e){</span>
-<span class="nc" id="L68">            return ResponseObject.builder()</span>
-<span class="nc" id="L69">                    .code(400)</span>
-<span class="nc" id="L70">                    .message(&quot;Exception: &quot;+ e.getMessage())</span>
-<span class="nc" id="L71">                    .build();</span>
+<span class="nc" id="L64">            return ResponseObject.builder()</span>
+<span class="nc" id="L65">                    .code(200)</span>
+<span class="nc" id="L66">                    .message(&quot;Found&quot;)</span>
+<span class="nc" id="L67">                    .data(object)</span>
+<span class="nc" id="L68">                    .build();</span>
+<span class="nc" id="L69">        }catch (Exception e){</span>
+<span class="nc" id="L70">            return ResponseObject.builder()</span>
+<span class="nc" id="L71">                    .code(400)</span>
+<span class="nc" id="L72">                    .message(EXCEPTION_DEFAULT_MSG + e.getMessage())</span>
+<span class="nc" id="L73">                    .build();</span>
         }
     }
 
     @Override
     public ResponseObject&lt;Object&gt; create(WalletTransactionDTOcreate object) {
         try{
-<span class="nc" id="L78">            Wallet wallet = walletRepository.findByCustomerId(object.getCustomerId())</span>
-<span class="nc" id="L79">                    .orElseThrow(() -&gt; new Exception(&quot;wallet not found for customer: &quot; + object.getCustomerId()));</span>
-<span class="nc" id="L80">            WalletTransaction walletTransaction = modelMapper.map(object, WalletTransaction.class);</span>
+<span class="nc" id="L80">            Wallet wallet = walletRepository.findByCustomerId(object.getCustomerId())</span>
+<span class="nc" id="L81">                    .orElseThrow(() -&gt; new Exception(&quot;wallet not found for customer: &quot; + object.getCustomerId()));</span>
+<span class="nc" id="L82">            WalletTransaction walletTransaction = modelMapper.map(object, WalletTransaction.class);</span>
 //            walletTransaction.setCreateDate(new Date(System.currentTimeMillis()));
-<span class="nc" id="L82">            walletTransaction.setWallet(wallet);</span>
-<span class="nc" id="L83">            walletTransactionRepository.save(walletTransaction);</span>
-<span class="nc" id="L84">            return ResponseObject.builder()</span>
-<span class="nc" id="L85">                    .code(200)</span>
-<span class="nc" id="L86">                    .message(&quot;Success&quot;)</span>
-<span class="nc" id="L87">                    .data(walletTransaction)</span>
-<span class="nc" id="L88">                    .build();</span>
-<span class="nc" id="L89">        }catch (Exception e){</span>
-<span class="nc" id="L90">            return ResponseObject.builder()</span>
-<span class="nc" id="L91">                    .code(400)</span>
-<span class="nc" id="L92">                    .message(&quot;Exception: &quot; + e.getMessage())</span>
-<span class="nc" id="L93">                    .build();</span>
+<span class="nc" id="L84">            walletTransaction.setWallet(wallet);</span>
+<span class="nc" id="L85">            walletTransactionRepository.save(walletTransaction);</span>
+<span class="nc" id="L86">            return ResponseObject.builder()</span>
+<span class="nc" id="L87">                    .code(200)</span>
+<span class="nc" id="L88">                    .message(SUCCESS_MSG)</span>
+<span class="nc" id="L89">                    .data(walletTransaction)</span>
+<span class="nc" id="L90">                    .build();</span>
+<span class="nc" id="L91">        }catch (Exception e){</span>
+<span class="nc" id="L92">            return ResponseObject.builder()</span>
+<span class="nc" id="L93">                    .code(400)</span>
+<span class="nc" id="L94">                    .message(EXCEPTION_DEFAULT_MSG + e.getMessage())</span>
+<span class="nc" id="L95">                    .build();</span>
         }
     }
 }

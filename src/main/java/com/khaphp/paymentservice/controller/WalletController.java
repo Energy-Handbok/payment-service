@@ -17,7 +17,7 @@ public class WalletController {
     private final WalletService walletService;
 
     @GetMapping("/detail")
-    public ResponseEntity<?> detailObject(String customerId){
+    public ResponseEntity<Object> detailObject(String customerId){
         ResponseObject<Object> responseObject = walletService.getDerail(customerId);
         if(responseObject.getCode() == 200){
             return ResponseEntity.ok(responseObject);
@@ -26,7 +26,7 @@ public class WalletController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createObject(@RequestBody WalletDTOcreate walletDTOcreate){
+    public ResponseEntity<Object> createObject(@RequestBody WalletDTOcreate walletDTOcreate){
         ResponseObject<Object> responseObject = walletService.create(walletDTOcreate);
         if(responseObject.getCode() == 200){
             return ResponseEntity.ok(responseObject);
@@ -35,7 +35,7 @@ public class WalletController {
     }
 
     @PutMapping("/customer-balance")
-    public ResponseEntity<?> updateObjectBalance(@RequestBody @Valid WalletDTOupdate object){
+    public ResponseEntity<Object> updateObjectBalance(@RequestBody @Valid WalletDTOupdate object){
         ResponseObject<Object> responseObject = walletService.updateBalance(object);
         if(responseObject.getCode() == 200){
             return ResponseEntity.ok(responseObject);
@@ -44,7 +44,7 @@ public class WalletController {
     }
 
     @DeleteMapping
-    public ResponseEntity<?> deleteObject(String id){
+    public ResponseEntity<Object> deleteObject(String id){
         ResponseObject<Object> responseObject = walletService.delete(id);
         if(responseObject.getCode() == 200){
             return ResponseEntity.ok(responseObject);

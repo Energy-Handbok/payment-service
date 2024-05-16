@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>WalletServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">payment-service</a> &gt; <a href="index.source.html" class="el_package">com.khaphp.paymentservice.service</a> &gt; <span class="el_source">WalletServiceImpl.java</span></div><h1>WalletServiceImpl.java</h1><pre class="source lang-java linenums">package com.khaphp.paymentservice.service;
+
+import com.khaphp.common.dto.ResponseObject;
+import com.khaphp.common.entity.UserSystem;
+import com.khaphp.paymentservice.call.UserServiceCall;
+import com.khaphp.paymentservice.dto.Wallet.WalletDTOcreate;
+import com.khaphp.paymentservice.dto.Wallet.WalletDTOupdate;
+import com.khaphp.paymentservice.entity.Wallet;
+import com.khaphp.paymentservice.repository.WalletRepository;
+import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
+@Service
+<span class="nc" id="L16">@RequiredArgsConstructor</span>
+public class WalletServiceImpl implements WalletService {
+    private final WalletRepository walletRepository;
+    private final UserServiceCall userServiceCall;
+    @Override
+    public ResponseObject&lt;Object&gt; getDerail(String customerId) {
+        try {
+<span class="nc" id="L23">            UserSystem customer = userServiceCall.getObject(customerId);</span>
+<span class="nc bnc" id="L24" title="All 2 branches missed.">            if(customer == null){</span>
+<span class="nc" id="L25">                throw new Exception(&quot;customer not found&quot;);</span>
+            }
+<span class="nc" id="L27">            Wallet wallet = walletRepository.findByCustomerId(customerId).orElseThrow(() -&gt; new Exception(&quot;wallet not found&quot;));</span>
+<span class="nc" id="L28">            return ResponseObject.builder()</span>
+<span class="nc" id="L29">                    .code(200).message(&quot;Success&quot;)</span>
+<span class="nc" id="L30">                    .data(wallet)</span>
+<span class="nc" id="L31">                    .build();</span>
+<span class="nc" id="L32">        }catch (Exception e){</span>
+<span class="nc" id="L33">            return ResponseObject.builder()</span>
+<span class="nc" id="L34">                    .code(400).message(&quot;Exception: &quot; + e.getMessage())</span>
+<span class="nc" id="L35">                    .build();</span>
+        }
+    }
+
+    @Override
+    public ResponseObject&lt;Object&gt; create(WalletDTOcreate object) {
+        try {
+<span class="nc" id="L42">            UserSystem customer = userServiceCall.getObject(object.getCustomerId());</span>
+<span class="nc bnc" id="L43" title="All 2 branches missed.">            if(customer == null){</span>
+<span class="nc" id="L44">                throw new Exception(&quot;customer not found&quot;);</span>
+            }
+<span class="nc" id="L46">            Wallet wallet = new Wallet();</span>
+<span class="nc" id="L47">            wallet.setBalance(0);</span>
+<span class="nc" id="L48">            wallet.setCustomerId(object.getCustomerId());</span>
+<span class="nc" id="L49">            walletRepository.save(wallet);</span>
+<span class="nc" id="L50">            return ResponseObject.builder()</span>
+<span class="nc" id="L51">                    .code(200).message(&quot;Success&quot;)</span>
+<span class="nc" id="L52">                    .data(wallet)</span>
+<span class="nc" id="L53">                    .build();</span>
+<span class="nc" id="L54">        }catch (Exception e){</span>
+<span class="nc" id="L55">            return ResponseObject.builder()</span>
+<span class="nc" id="L56">                    .code(400).message(&quot;Exception: &quot; + e.getMessage())</span>
+<span class="nc" id="L57">                    .build();</span>
+        }
+    }
+
+    @Override
+    public ResponseObject&lt;Object&gt; updateBalance(WalletDTOupdate object) {
+        try {
+<span class="nc" id="L64">            Wallet wallet = walletRepository.findByCustomerId(object.getCustomerId())</span>
+<span class="nc" id="L65">                    .orElseThrow(() -&gt; new Exception(&quot;wallet not found for user id: &quot; + object.getCustomerId()));</span>
+<span class="nc" id="L66">            wallet.setBalance(wallet.getBalance() + object.getBalance());</span>
+<span class="nc" id="L67">            walletRepository.save(wallet);</span>
+<span class="nc" id="L68">            return ResponseObject.builder()</span>
+<span class="nc" id="L69">                    .code(200).message(&quot;Success&quot;)</span>
+<span class="nc" id="L70">                    .build();</span>
+<span class="nc" id="L71">        }catch (Exception e){</span>
+<span class="nc" id="L72">            return ResponseObject.builder()</span>
+<span class="nc" id="L73">                    .code(400).message(&quot;Exception: &quot; + e.getMessage())</span>
+<span class="nc" id="L74">                    .build();</span>
+        }
+    }
+
+    @Override
+    public ResponseObject&lt;Object&gt; delete(String id) {
+        try {
+<span class="nc bnc" id="L81" title="All 2 branches missed.">            if(!walletRepository.existsById(id)){</span>
+<span class="nc" id="L82">                throw new Exception(&quot;object not found&quot;);</span>
+            }
+<span class="nc" id="L84">            walletRepository.deleteById(id);</span>
+<span class="nc" id="L85">            return ResponseObject.builder()</span>
+<span class="nc" id="L86">                    .code(200).message(&quot;Success&quot;)</span>
+<span class="nc" id="L87">                    .build();</span>
+<span class="nc" id="L88">        }catch (Exception e){</span>
+<span class="nc" id="L89">            return ResponseObject.builder()</span>
+<span class="nc" id="L90">                    .code(400).message(&quot;Exception: &quot; + e.getMessage())</span>
+<span class="nc" id="L91">                    .build();</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

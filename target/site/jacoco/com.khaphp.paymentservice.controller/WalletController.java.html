@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>WalletController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">payment-service</a> &gt; <a href="index.source.html" class="el_package">com.khaphp.paymentservice.controller</a> &gt; <span class="el_source">WalletController.java</span></div><h1>WalletController.java</h1><pre class="source lang-java linenums">package com.khaphp.paymentservice.controller;
+
+import com.khaphp.common.dto.ResponseObject;
+import com.khaphp.paymentservice.dto.Wallet.WalletDTOcreate;
+import com.khaphp.paymentservice.dto.Wallet.WalletDTOupdate;
+import com.khaphp.paymentservice.service.WalletService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping(&quot;api/v1/wallet&quot;)
+//@SecurityRequirement(name = &quot;EnergyHandbook&quot;)
+<span class="nc" id="L15">@RequiredArgsConstructor</span>
+public class WalletController {
+    private final WalletService walletService;
+
+    @GetMapping(&quot;/detail&quot;)
+    public ResponseEntity&lt;?&gt; detailObject(String customerId){
+<span class="nc" id="L21">        ResponseObject&lt;Object&gt; responseObject = walletService.getDerail(customerId);</span>
+<span class="nc bnc" id="L22" title="All 2 branches missed.">        if(responseObject.getCode() == 200){</span>
+<span class="nc" id="L23">            return ResponseEntity.ok(responseObject);</span>
+        }
+<span class="nc" id="L25">        return ResponseEntity.badRequest().body(responseObject);</span>
+    }
+
+    @PostMapping
+    public ResponseEntity&lt;?&gt; createObject(@RequestBody WalletDTOcreate walletDTOcreate){
+<span class="nc" id="L30">        ResponseObject&lt;Object&gt; responseObject = walletService.create(walletDTOcreate);</span>
+<span class="nc bnc" id="L31" title="All 2 branches missed.">        if(responseObject.getCode() == 200){</span>
+<span class="nc" id="L32">            return ResponseEntity.ok(responseObject);</span>
+        }
+<span class="nc" id="L34">        return ResponseEntity.badRequest().body(responseObject);</span>
+    }
+
+    @PutMapping(&quot;/customer-balance&quot;)
+    public ResponseEntity&lt;?&gt; updateObjectBalance(@RequestBody @Valid WalletDTOupdate object){
+<span class="nc" id="L39">        ResponseObject&lt;Object&gt; responseObject = walletService.updateBalance(object);</span>
+<span class="nc bnc" id="L40" title="All 2 branches missed.">        if(responseObject.getCode() == 200){</span>
+<span class="nc" id="L41">            return ResponseEntity.ok(responseObject);</span>
+        }
+<span class="nc" id="L43">        return ResponseEntity.badRequest().body(responseObject);</span>
+    }
+
+    @DeleteMapping
+    public ResponseEntity&lt;?&gt; deleteObject(String id){
+<span class="nc" id="L48">        ResponseObject&lt;Object&gt; responseObject = walletService.delete(id);</span>
+<span class="nc bnc" id="L49" title="All 2 branches missed.">        if(responseObject.getCode() == 200){</span>
+<span class="nc" id="L50">            return ResponseEntity.ok(responseObject);</span>
+        }
+<span class="nc" id="L52">        return ResponseEntity.badRequest().body(responseObject);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

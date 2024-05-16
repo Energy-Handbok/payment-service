@@ -7,6 +7,6 @@
 # Payment Service
 *Manage wallet & transaction*
 
-👉 [JaCoCo Code Coverage Report](https://energy-handbok.github.io/payment-service/target/site/jacoco/index.html) 🌱
+👉 [JaCoCo Code Coverage Report](https://energy-handbok.github.io/jacoco-report/payment-service/site/jacoco/index.html) 🌱
 
 #### © 2024 BlueEyesssss

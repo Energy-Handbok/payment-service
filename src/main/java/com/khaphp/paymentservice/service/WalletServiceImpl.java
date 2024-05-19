@@ -8,8 +8,6 @@ import com.khaphp.paymentservice.dto.Wallet.WalletDTOupdate;
 import com.khaphp.paymentservice.entity.Wallet;
 import com.khaphp.paymentservice.repository.WalletRepository;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service

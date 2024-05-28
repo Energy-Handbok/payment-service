@@ -1,4 +1,4 @@
-package com.khaphp.paymentservice.dto.Wallet;
+package com.khaphp.common.dto.payment;
 
 import lombok.*;
 

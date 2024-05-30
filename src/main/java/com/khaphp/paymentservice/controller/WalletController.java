@@ -4,6 +4,7 @@ import com.khaphp.common.dto.ResponseObject;
 import com.khaphp.paymentservice.dto.Wallet.WalletDTOcreate;
 import com.khaphp.paymentservice.dto.Wallet.WalletDTOupdate;
 import com.khaphp.paymentservice.service.WalletService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +36,7 @@ public class WalletController {
     }
 
     @PutMapping("/customer-balance")
+    @Operation(description = "field balance là số tiền sẽ đc cập nhật vào trong ví, vd: balance=-10000 -> balance += (-10000)")
     public ResponseEntity<Object> updateObjectBalance(@RequestBody @Valid WalletDTOupdate object){
         ResponseObject<Object> responseObject = walletService.updateBalance(object);
         if(responseObject.getCode() == 200){

@@ -95,4 +95,22 @@ public class WalletTransactionServiceImpl implements WalletTransactionService {
                     .build();
         }
     }
+
+    @Override
+    public ResponseObject<Object> delete(String id) throws Exception {
+        try{
+            if(walletTransactionRepository.existsById(id)){
+                walletTransactionRepository.deleteById(id);
+                return ResponseObject.builder()
+                        .code(200)
+                        .message(SUCCESS_MSG)
+                        .build();
+            }else{
+                System.out.println("transaction with id "+ id +" not found");
+            }
+        }catch (Exception ex){
+            throw new Exception(ex.getMessage());
+        }
+        return null;
+    }
 }

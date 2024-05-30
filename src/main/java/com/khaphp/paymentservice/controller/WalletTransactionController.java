@@ -41,4 +41,17 @@ public class WalletTransactionController {
         }
         return ResponseEntity.badRequest().body(responseObject);
     }
+
+    @DeleteMapping
+    public ResponseEntity<Object> deleteObject(String id) {
+        try{
+            ResponseObject<Object> responseObject = walletTransactionService.delete(id);
+            if(responseObject.getCode() == 200){
+                return ResponseEntity.ok(responseObject);
+            }
+            return ResponseEntity.badRequest().body(responseObject);
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }

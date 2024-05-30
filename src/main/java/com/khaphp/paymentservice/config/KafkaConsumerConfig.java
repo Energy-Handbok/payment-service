@@ -20,8 +20,6 @@ public class KafkaConsumerConfig {
     private String kafkaServer;
     @Value("${kafka-group}")
     private String kafkaGroup;
-    @Value("${kafka-trusted-packages}")
-    private String kafkaTrustedPackages;
     @Bean
     public ConsumerFactory<String, Object> consumerFactory()
     {

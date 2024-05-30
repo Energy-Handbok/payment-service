@@ -8,4 +8,5 @@ public interface WalletTransactionService {
     ResponseObject<Object> getAll(int pageSize, int pageIndex);
     ResponseObject<Object> getDetail(String id);
     ResponseObject<Object> create(WalletTransactionDTOcreate object);
+    ResponseObject<Object> delete(String id) throws Exception;
 }
